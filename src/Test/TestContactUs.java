@@ -54,7 +54,6 @@ public class TestContactUs {
 
 		List<WebElement> list = driver.findElements(By.className("error-msg"));
 
-		assertFalse("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
 		assertTrue("Shows warning for required email", list.get(0).getText().equals( "Email is a required field"));
 		assertTrue("Shows warning for required description field", list.get(1).getText().equals( "Problem description is a required field"));
 
@@ -62,7 +61,7 @@ public class TestContactUs {
 	}
 
 	@Test(dataProvider = "hardCodedBrowsers")
-	public void Contact_Page_with_valid_email_and_valid_description(String browser, String version, String os) throws Exception {
+	public void Contact_Page_with_valid_email_and_description(String browser, String version, String os) throws Exception {
 
 		WebDriver driver = createDriver(browser, version, os);
 
@@ -74,11 +73,7 @@ public class TestContactUs {
 		type(By.id("user-issue"),"Hello World...!");		
 		click(By.className("modal-submit-button"));
 
-		List<WebElement> list = driver.findElements(By.className("error-msg"));
-
-		assertFalse("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
-		assertTrue("Shows warning for required email", list.get(0).getText().equals( "Email is a required field"));
-		assertTrue("Shows warning for required description field", list.get(1).getText().equals( "Problem description is a required field"));
+		assertTrue("Shows message received.", driver.findElement(By.className("message-wrapper")).getText().equals("Thanks for contacting us. Your message was received."));
 
 		driver.quit();	
 	}
@@ -97,9 +92,7 @@ public class TestContactUs {
 
 		List<WebElement> list = driver.findElements(By.className("error-msg"));
 
-		assertFalse("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
 		assertTrue("Shows warning for required email", list.get(0).getText().equals( "Email is a required field"));
-		assertTrue("Shows warning for required description field", list.get(1).getText().equals( "Problem description is a required field"));
 
 		driver.quit();	
 	}
@@ -119,9 +112,7 @@ public class TestContactUs {
 
 		List<WebElement> list = driver.findElements(By.className("error-msg"));
 
-		assertFalse("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
-		assertTrue("Shows warning for required email", list.get(0).getText().equals( "Email is a required field"));
-		assertTrue("Shows warning for required description field", list.get(1).getText().equals( "Problem description is a required field"));
+		assertTrue("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
 
 		driver.quit();	
 	}
@@ -140,8 +131,6 @@ public class TestContactUs {
 
 		List<WebElement> list = driver.findElements(By.className("error-msg"));
 
-		assertFalse("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
-		assertTrue("Shows warning for required email", list.get(0).getText().equals( "Email is a required field"));
 		assertTrue("Shows warning for required description field", list.get(1).getText().equals( "Problem description is a required field"));
 
 		driver.quit();	
@@ -161,8 +150,7 @@ public class TestContactUs {
 
 		List<WebElement> list = driver.findElements(By.className("error-msg"));
 
-		assertFalse("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
-		assertTrue("Shows warning for required email", list.get(0).getText().equals( "Email is a required field"));
+		assertTrue("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
 		assertTrue("Shows warning for required description field", list.get(1).getText().equals( "Problem description is a required field"));
 
 		driver.quit();	
