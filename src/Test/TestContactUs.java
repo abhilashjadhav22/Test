@@ -2,234 +2,170 @@ package Test;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
-import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.remote.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.Platform;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 public class TestContactUs {
 	
 	WebDriver driver;
-	String baseUrl;
 	
-	@Test
-	public void TestSuccess() throws IOException, WebDriverException
-	{
-		//In this test, providing valid email & valid description
-		driver=new FirefoxDriver();
-		driver.get("http://test.helpshift.com");
-		assertTrue("Wrong URL", driver.getCurrentUrl().equals("http://test.helpshift.com/a/ios-test/"));
-		
-		click(By.id("new-issue"));
-		assertTrue("Wrong URL", driver.getCurrentUrl().equals("http://test.helpshift.com/a/ios-test/?contact=1"));
-		
-		type(By.id("user-name"),"Abhilash");
-		type(By.id("user-email"),"aaa@aaa.com");
-		type(By.id("user-issue"),"Hello World...!");
-		
-		click(By.className("modal-submit-button"));
-		
-		List<WebElement> list = driver.findElements(By.className("error-msg"));
-		for(int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).getText());
-            if(list.get(i).getText().equals("Please enter a valid email"))
-            {
-            	assertFalse("Please enter a valid email", list.get(i).getText().equals("Please enter a valid email"));
-            }
-            else if(list.get(i).getText().equals("Email is a required field"))
-            {
-            	assertFalse("Email is a required field", list.get(i).getText().equals( "Email is a required field"));
-            }
-            else if(list.get(i).getText().equals("Problem description is a required field"))
-            {
-            	assertFalse("Problem description is a required field", list.get(i).getText().equals( "Problem description is a required field"));
-            }
-        }
-		
-		driver.quit();	
-	}
+	// right now added only two browsers for cross browser testing as there are restriction on parallel cross browser testing is max 3 browsers
+	@DataProvider(name = "hardCodedBrowsers", parallel = true)
+    public static Object[][] sauceBrowserDataProvider(Method testMethod) {
+        return new Object[][]{
+                new Object[]{"firefox", "31.0", "windows"},
+                new Object[]{"chrome", "36.0", "windows"}
+        };
+    }
 	
-	@Test
-	public void TestFail1() throws IOException, WebDriverException, UnknownError
-	{
-		//In this test, we are providing blank email & valid description
-		driver=new FirefoxDriver();
-		driver.get("http://test.helpshift.com");
-			
-		click(By.id("new-issue"));
-		assertTrue("Wrong URL", driver.getCurrentUrl().equals("http://test.helpshift.com/a/ios-test/?contact=1"));
-		
-		type(By.id("user-name"),"Abhilash");
-		//type(By.id("user-email"),"aaa@aa2.com");
-		type(By.id("user-issue"),"Hello World...!");
-		
-		click(By.className("modal-submit-button"));
-		
-		List<WebElement> list = driver.findElements(By.className("error-msg"));
-		for(int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).getText());
-            if(list.get(i).getText().equals("Please enter a valid email"))
-            {
-            	assertFalse("Please enter a valid email", list.get(i).getText().equals("Please enter a valid email"));
-            }
-            else if(list.get(i).getText().equals("Email is a required field"))
-            {
-            	assertFalse("Email is a required field", list.get(i).getText().equals( "Email is a required field"));
-            }
-            else if(list.get(i).getText().equals("Problem description is a required field"))
-            {
-            	assertFalse("Problem description is a required field", list.get(i).getText().equals( "Problem description is a required field"));
-            }
-            
-        }
-		
-		driver.quit();
-		
-	}
-	
-	@Test
-	public void TestFail2() throws IOException, WebDriverException, UnknownError
-	{
-		//In this test, we are providing invalid email & valid description
-		driver=new FirefoxDriver();
-		driver.get("http://test.helpshift.com");
-	
-		click(By.id("new-issue"));
-		assertTrue("Wrong URL", driver.getCurrentUrl().equals("http://test.helpshift.com/a/ios-test/?contact=1"));
-		
-		type(By.id("user-name"),"Abhilash");
-		type(By.id("user-email"),"aaa");
-		type(By.id("user-issue"),"Hello World...!");
-		
-		click(By.className("modal-submit-button"));
-		
-		List<WebElement> list = driver.findElements(By.className("error-msg"));
-		for(int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).getText());
-            if(list.get(i).getText().equals("Please enter a valid email"))
-            {
-            	assertFalse("Please enter a valid email", list.get(i).getText().equals("Please enter a valid email"));
-            }
-            else if(list.get(i).getText().equals("Email is a required field"))
-            {
-            	assertFalse("Email is a required field", list.get(i).getText().equals( "Email is a required field"));
-            }
-            else if(list.get(i).getText().equals("Problem description is a required field"))
-            {
-            	assertFalse("Problem description is a required field", list.get(i).getText().equals( "Problem description is a required field"));
-            }
-            
-        }
-		
-		driver.quit();
-		
-	}
-	
-	@Test
-	public void TestFail3() throws IOException, WebDriverException, UnknownError
-	{
-		//In this test, we are providing valid email & blank description
-		driver=new FirefoxDriver();
-		driver.get("http://test.helpshift.com");
-		
-		click(By.id("new-issue"));
-		assertTrue("Wrong URL", driver.getCurrentUrl().equals("http://test.helpshift.com/a/ios-test/?contact=1"));
-		
-		type(By.id("user-name"),"Abhilash");
-		type(By.id("user-email"),"aaa@aaa.com");
-		//type(By.id("user-issue"),"Hello World...!");
-		
-		click(By.className("modal-submit-button"));
-		
-		List<WebElement> list = driver.findElements(By.className("error-msg"));
-		for(int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).getText());
-            if(list.get(i).getText().equals("Please enter a valid email"))
-            {
-            	assertFalse("Please enter a valid email", list.get(i).getText().equals("Please enter a valid email"));
-            }
-            else if(list.get(i).getText().equals("Email is a required field"))
-            {
-            	assertFalse("Email is a required field", list.get(i).getText().equals( "Email is a required field"));
-            }
-            else if(list.get(i).getText().equals("Problem description is a required field"))
-            {
-            	assertFalse("Problem description is a required field", list.get(i).getText().equals( "Problem description is a required field"));
-            }
-            
-        }
-		
-		driver.quit();
-		
-	}
-	
-	@Test
-	public void TestFail4() throws IOException, WebDriverException, UnknownError
-	{
-		//In this test, we are providing blank email & blank description
-		driver=new FirefoxDriver();
-		driver.get("http://test.helpshift.com");
-		
-		click(By.id("new-issue"));
-		assertTrue("Wrong URL", driver.getCurrentUrl().equals("http://test.helpshift.com/a/ios-test/?contact=1"));
-		
-		type(By.id("user-name"),"Abhilash");
-		//type(By.id("user-email"),"aaa@aaa.com");
-		//type(By.id("user-issue"),"Hello World...!");
-		
-		click(By.className("modal-submit-button"));
-		
-		List<WebElement> list = driver.findElements(By.className("error-msg"));
-		
-		assertFalse("Please enter a valid email", list.get(0).getText().equals("Please enter a valid email"));
-		assertFalse("Email is a required field", list.get(0).getText().equals( "Email is a required field"));
-		assertFalse("Problem description is a required field", list.get(1).getText().equals( "Problem description is a required field"));
-		
-		driver.quit();																										
-		
-	}
-	
-	@Test
-	public void TestFail5() throws IOException, WebDriverException, UnknownError
-	{
-		//In this test, we are providing invalid email & valid description
-		driver=new FirefoxDriver();
-		driver.get("http://test.helpshift.com");
+	private WebDriver createDriver(String browser, String version, String os) throws MalformedURLException {
 
+		 DesiredCapabilities capabilities = new DesiredCapabilities();
+	     capabilities.setBrowserName(browser);
+	     capabilities.setCapability("version", version);
+	     capabilities.setCapability("platform",Platform.extractFromSysProperty(os));
+	     this.driver = new RemoteWebDriver(
+	    		 new URL("http://abhilash_jadhav22:9f3a2e20-5b21-4ee9-bd5f-8fd34079ac18@ondemand.saucelabs.com:80/wd/hub"),
+	             	capabilities);
+	     return this.driver;
+    }
+	
+	@Test(dataProvider = "hardCodedBrowsers")
+	public void Contact_Us_with_Blank_Email_and_Desciption(String browser, String version, String os) throws Exception {
+        
+		WebDriver driver = createDriver(browser, version, os);
+    	
+		driver.get("http://test.helpshift.com");
 		click(By.id("new-issue"));
-		assertTrue("Wrong URL", driver.getCurrentUrl().equals("http://test.helpshift.com/a/ios-test/?contact=1"));
 		
 		type(By.id("user-name"),"Abhilash");
-		type(By.id("user-email"),"aaa");
-		//type(By.id("user-issue"),"Hello World...!");
-		
 		click(By.className("modal-submit-button"));
 		
 		List<WebElement> list = driver.findElements(By.className("error-msg"));
-		for(int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).getText());
-            if(list.get(i).getText().equals("Please enter a valid email"))
-            {
-            	assertFalse("Please enter a valid email", list.get(i).getText().equals("Please enter a valid email"));
-            }
-            else if(list.get(i).getText().equals("Email is a required field"))
-            {
-            	assertFalse("Email is a required field", list.get(i).getText().equals( "Email is a required field"));
-            }
-            else if(list.get(i).getText().equals("Problem description is a required field"))
-            {
-            	assertFalse("Problem description is a required field", list.get(i).getText().equals( "Problem description is a required field"));
-            }
-            
-        }
 		
-		driver.quit();
-			
+		assertFalse("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
+        assertTrue("Shows warning for required email", list.get(0).getText().equals( "Email is a required field"));
+        assertTrue("Shows warning for required description field", list.get(1).getText().equals( "Problem description is a required field"));
+       	
+        driver.quit();
+    }
+	
+	@Test(dataProvider = "hardCodedBrowsers")
+	public void Contact_Page_with_valid_email_and_valid_description(String browser, String version, String os) throws Exception {
+		
+		WebDriver driver = createDriver(browser, version, os);
+    	
+		driver.get("http://test.helpshift.com");
+		click(By.id("new-issue"));
+		
+		type(By.id("user-name"),"Abhilash");
+		type(By.id("user-email"),"aaa@aaa.com");
+		type(By.id("user-issue"),"Hello World...!");		
+		click(By.className("modal-submit-button"));
+		
+		List<WebElement> list = driver.findElements(By.className("error-msg"));
+		
+		assertFalse("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
+        assertTrue("Shows warning for required email", list.get(0).getText().equals( "Email is a required field"));
+        assertTrue("Shows warning for required description field", list.get(1).getText().equals( "Problem description is a required field"));
+       	
+        driver.quit();	
+	}
+	
+	@Test(dataProvider = "hardCodedBrowsers")
+	public void Contact_Page_with_blank_email_and_valid_description(String browser, String version, String os) throws Exception {
+		
+		WebDriver driver = createDriver(browser, version, os);
+    	
+		driver.get("http://test.helpshift.com");
+		click(By.id("new-issue"));
+		
+		type(By.id("user-name"),"Abhilash");
+		type(By.id("user-issue"),"Hello World...!");		
+		click(By.className("modal-submit-button"));
+		
+		List<WebElement> list = driver.findElements(By.className("error-msg"));
+		
+		assertFalse("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
+        assertTrue("Shows warning for required email", list.get(0).getText().equals( "Email is a required field"));
+        assertTrue("Shows warning for required description field", list.get(1).getText().equals( "Problem description is a required field"));
+       	
+        driver.quit();	
+	}
+	
+	@Test(dataProvider = "hardCodedBrowsers")
+	public void Contact_Page_with_Invalid_email_and_Valid_description(String browser, String version, String os) throws Exception {
+		
+		WebDriver driver = createDriver(browser, version, os);
+    	
+		driver.get("http://test.helpshift.com");
+		click(By.id("new-issue"));
+		
+		type(By.id("user-name"),"Abhilash");
+		type(By.id("user-email"),"aaa");
+		type(By.id("user-issue"),"Hello World...!");		
+		click(By.className("modal-submit-button"));
+		
+		List<WebElement> list = driver.findElements(By.className("error-msg"));
+		
+		assertFalse("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
+        assertTrue("Shows warning for required email", list.get(0).getText().equals( "Email is a required field"));
+        assertTrue("Shows warning for required description field", list.get(1).getText().equals( "Problem description is a required field"));
+       	
+        driver.quit();	
+	}
+	
+	@Test(dataProvider = "hardCodedBrowsers")
+	public void Contact_Page_with_valid_email_and_blank_description(String browser, String version, String os) throws Exception {
+		
+		WebDriver driver = createDriver(browser, version, os);
+    	
+		driver.get("http://test.helpshift.com");
+		click(By.id("new-issue"));
+		
+		type(By.id("user-name"),"Abhilash");
+		type(By.id("user-email"),"aaa@aaa.com");
+		click(By.className("modal-submit-button"));
+		
+		List<WebElement> list = driver.findElements(By.className("error-msg"));
+		
+		assertFalse("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
+        assertTrue("Shows warning for required email", list.get(0).getText().equals( "Email is a required field"));
+        assertTrue("Shows warning for required description field", list.get(1).getText().equals( "Problem description is a required field"));
+       	
+        driver.quit();	
+	}
+	
+	@Test(dataProvider = "hardCodedBrowsers")
+	public void Contact_Page_with_Invalid_email_and_blank_description(String browser, String version, String os) throws Exception {
+		
+		WebDriver driver = createDriver(browser, version, os);
+    	
+		driver.get("http://test.helpshift.com");
+		click(By.id("new-issue"));
+		
+		type(By.id("user-name"),"Abhilash");
+		type(By.id("user-email"),"aaa");
+		click(By.className("modal-submit-button"));
+		
+		List<WebElement> list = driver.findElements(By.className("error-msg"));
+		
+		assertFalse("Shows warning for valid email", list.get(0).getText().equals("Please enter a valid email"));
+        assertTrue("Shows warning for required email", list.get(0).getText().equals( "Email is a required field"));
+        assertTrue("Shows warning for required description field", list.get(1).getText().equals( "Problem description is a required field"));
+       	
+        driver.quit();	
 	}
 	
 	public void type(By by, String value)	
@@ -241,6 +177,5 @@ public class TestContactUs {
 	{
 		driver.findElement(by).click();
 	}
-	
 	
 }

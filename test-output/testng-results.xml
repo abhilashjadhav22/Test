@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="2" passed="2">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="44429" started-at="2014-07-30T21:12:54Z" finished-at="2014-07-30T21:13:39Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="44429" started-at="2014-07-30T21:12:54Z" finished-at="2014-07-30T21:13:39Z">
+      <class name="Test.TestContactUs">
+        <test-method status="PASS" signature="Contact_Us_with_Blank_Email_and_Desciption(java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:Test.TestContactUs@2b96978f]" name="Contact_Us_with_Blank_Email_and_Desciption" duration-ms="21002" started-at="2014-07-31T02:42:54Z" data-provider="hardCodedBrowsers" finished-at="2014-07-31T02:43:15Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[chrome]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[36.0]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[windows]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Contact_Us_with_Blank_Email_and_Desciption -->
+        <test-method status="PASS" signature="Contact_Us_with_Blank_Email_and_Desciption(java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:Test.TestContactUs@2b96978f]" name="Contact_Us_with_Blank_Email_and_Desciption" duration-ms="44381" started-at="2014-07-31T02:42:54Z" data-provider="hardCodedBrowsers" finished-at="2014-07-31T02:43:39Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[firefox]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[31.0]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[windows]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Contact_Us_with_Blank_Email_and_Desciption -->
+      </class> <!-- Test.TestContactUs -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
