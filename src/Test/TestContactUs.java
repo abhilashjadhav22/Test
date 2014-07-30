@@ -18,8 +18,9 @@ public class TestContactUs {
 	String baseUrl;
 	
 	@Test
-	public void TestSuccessWhenProvidingAllRequiredAndCorrectInfo() throws IOException, WebDriverException
+	public void TestSuccess() throws IOException, WebDriverException
 	{
+		//In this test, providing valid email & valid description
 		driver=new FirefoxDriver();
 		driver.get("http://test.helpshift.com");
 		assertTrue("Wrong URL", driver.getCurrentUrl().equals("http://test.helpshift.com/a/ios-test/"));
@@ -54,8 +55,9 @@ public class TestContactUs {
 	}
 	
 	@Test
-	public void Test1FailWhenProvidingBlankEmailAndCorrectDescription() throws IOException, WebDriverException, UnknownError
+	public void TestFail1() throws IOException, WebDriverException, UnknownError
 	{
+		//In this test, we are providing blank email & valid description
 		driver=new FirefoxDriver();
 		driver.get("http://test.helpshift.com");
 			
@@ -91,8 +93,9 @@ public class TestContactUs {
 	}
 	
 	@Test
-	public void Test2FailWhenProvidingWrongEmailAndCorrectDescription() throws IOException, WebDriverException, UnknownError
+	public void TestFail2() throws IOException, WebDriverException, UnknownError
 	{
+		//In this test, we are providing invalid email & valid description
 		driver=new FirefoxDriver();
 		driver.get("http://test.helpshift.com");
 	
@@ -128,8 +131,9 @@ public class TestContactUs {
 	}
 	
 	@Test
-	public void Test3FailWhenProvidingCorrectEmailAndBlankDescription() throws IOException, WebDriverException, UnknownError
+	public void TestFail3() throws IOException, WebDriverException, UnknownError
 	{
+		//In this test, we are providing valid email & blank description
 		driver=new FirefoxDriver();
 		driver.get("http://test.helpshift.com");
 		
@@ -165,8 +169,9 @@ public class TestContactUs {
 	}
 	
 	@Test
-	public void Test4FailWhenProvidingBlankEmailAndBlankDescription() throws IOException, WebDriverException, UnknownError
+	public void TestFail4() throws IOException, WebDriverException, UnknownError
 	{
+		//In this test, we are providing blank email & blank description
 		driver=new FirefoxDriver();
 		driver.get("http://test.helpshift.com");
 		
@@ -180,18 +185,19 @@ public class TestContactUs {
 		click(By.className("modal-submit-button"));
 		
 		List<WebElement> list = driver.findElements(By.className("error-msg"));
-				
+		
 		assertFalse("Please enter a valid email", list.get(0).getText().equals("Please enter a valid email"));
 		assertFalse("Email is a required field", list.get(0).getText().equals( "Email is a required field"));
 		assertFalse("Problem description is a required field", list.get(1).getText().equals( "Problem description is a required field"));
 		
-		driver.quit();
+		driver.quit();																										
 		
 	}
 	
 	@Test
-	public void Test5FailWhenProvidingWrongEmailAndBlankDescription() throws IOException, WebDriverException, UnknownError
+	public void TestFail5() throws IOException, WebDriverException, UnknownError
 	{
+		//In this test, we are providing invalid email & valid description
 		driver=new FirefoxDriver();
 		driver.get("http://test.helpshift.com");
 
